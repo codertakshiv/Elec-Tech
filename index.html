@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ElecTech - Resistor + SMD Code Tools</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg" aria-hidden="true"></div>
+
+  <main class="shell">
+    <header class="topbar glass">
+      <div class="brand-wrap">
+        <span class="brand-dot"></span>
+        <div>
+          <p class="eyebrow">ElecTech Toolkit</p>
+          <h1>ElecTech</h1>
+        </div>
+      </div>
+      <p class="top-note">Precision resistor and SMD code workspace</p>
+    </header>
+
+    <section class="hero glass">
+      <p class="hero-kicker">Futuristic Electronic Assistant</p>
+      <h2>Decode. Convert. Verify.</h2>
+      <p class="lead">Professional tools for resistor bands and SMD markings with 3D visual references and clean alignment.</p>
+      <div class="hero-pills">
+        <span>Fast Decoding</span>
+        <span>3D Visual Chips</span>
+        <span>Mobile Ready</span>
+      </div>
+    </section>
+
+    <nav class="tools" aria-label="Tool selector">
+      <button class="tool-btn active" data-tool="resistor">Resistor Lab</button>
+      <button class="tool-btn" data-tool="smd-res">SMD Resistor Code</button>
+      <button class="tool-btn" data-tool="smd-cap">SMD Capacitor Code</button>
+    </nav>
+
+    <section class="panel active" data-panel="resistor">
+      <div class="panel-head">
+        <h2>Resistor Lab</h2>
+        <p>Decode through-hole resistor colors and generate color bands from values.</p>
+      </div>
+
+      <div class="grid two panel-grid">
+        <article class="card glass">
+          <h3>Color to Value</h3>
+          <div class="row">
+            <label for="bandCount">Band Count</label>
+            <select id="bandCount">
+              <option value="3">3-band</option>
+              <option value="4" selected>4-band</option>
+              <option value="5">5-band</option>
+              <option value="6">6-band</option>
+            </select>
+          </div>
+
+          <div id="bandSelectors" class="bands"></div>
+
+          <div class="resistor-wrap">
+            <div id="resistorPreview" class="resistor-preview" aria-label="Resistor preview"></div>
+          </div>
+          <div id="decodeResult" class="result">Pick colors to decode resistor value.</div>
+        </article>
+
+        <article class="card glass">
+          <button id="valueToColorToggle" class="accordion-toggle" aria-expanded="false" aria-controls="valueToColorContent" type="button">
+            <span>Value to Color</span>
+            <span id="valueToColorArrow" class="accordion-arrow">▾</span>
+          </button>
+
+          <div id="valueToColorContent" class="accordion-content">
+            <div class="grid two tight">
+              <div>
+                <label for="resValue">Resistance</label>
+                <input id="resValue" type="number" min="0" step="any" placeholder="e.g. 4.7" />
+              </div>
+              <div>
+                <label for="resUnit">Unit</label>
+                <select id="resUnit">
+                  <option value="1">ohm</option>
+                  <option value="1000">k ohm</option>
+                  <option value="1000000">M ohm</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid two tight">
+              <div>
+                <label for="encBandCount">Band Count</label>
+                <select id="encBandCount">
+                  <option value="4" selected>4-band</option>
+                  <option value="5">5-band</option>
+                </select>
+              </div>
+              <div>
+                <label for="encTolerance">Tolerance</label>
+                <select id="encTolerance"></select>
+              </div>
+            </div>
+
+            <button id="encodeBtn" class="btn primary">Generate Color Code</button>
+            <div id="encodeResult" class="result">Enter value and generate color bands.</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="smd-res">
+      <div class="panel-head">
+        <h2>SMD Resistor Code Calculator</h2>
+        <p>Supports 3-digit, 4-digit, and EIA-96 markings including decimal `R` codes.</p>
+      </div>
+
+      <div class="grid two panel-grid">
+        <article class="card glass">
+          <div class="grid two tight">
+            <div>
+              <label for="smdResFormat">Code Format</label>
+              <select id="smdResFormat">
+                <option value="3">3 Digit EIA</option>
+                <option value="4">4 Digit EIA</option>
+                <option value="96">EIA-96</option>
+              </select>
+            </div>
+            <div>
+              <label for="smdResCode">Marking Code</label>
+              <input id="smdResCode" type="text" placeholder="e.g. 472, 1001, 24C, 4R7" />
+            </div>
+          </div>
+          <button id="smdResDecode" class="btn primary">Decode Resistor Code</button>
+          <div id="smdResResult" class="result">Enter SMD resistor code and decode.</div>
+        </article>
+
+        <article class="card glass visual-card">
+          <h3>3D SMD Resistor</h3>
+          <div class="chip3d resistor-chip">
+            <div class="chip-top" id="smdResTopCode">472</div>
+            <div class="chip-side left"></div>
+            <div class="chip-side right"></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="smd-cap">
+      <div class="panel-head">
+        <h2>SMD Capacitor Code Calculator</h2>
+        <p>Supports 3-digit and 4-digit capacitor codes plus `R` decimal codes.</p>
+      </div>
+
+      <div class="grid two panel-grid">
+        <article class="card glass">
+          <div class="grid two tight">
+            <div>
+              <label for="smdCapFormat">Code Format</label>
+              <select id="smdCapFormat">
+                <option value="3">3 Digit EIA</option>
+                <option value="4">4 Digit EIA</option>
+                <option value="r">R / Decimal Code</option>
+              </select>
+            </div>
+            <div>
+              <label for="smdCapCode">Marking Code</label>
+              <input id="smdCapCode" type="text" placeholder="e.g. 104, 1002, 4R7" />
+            </div>
+          </div>
+          <button id="smdCapDecode" class="btn primary">Decode Capacitor Code</button>
+          <div id="smdCapResult" class="result">Enter SMD capacitor code and decode.</div>
+        </article>
+
+        <article class="card glass visual-card">
+          <h3>3D SMD Capacitor</h3>
+          <div class="chip3d cap-chip">
+            <div class="chip-top" id="smdCapTopCode">104</div>
+            <div class="chip-side left"></div>
+            <div class="chip-side right"></div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="credit">Crafted with <span class="heart" aria-label="love">❤</span> by TAV</footer>
+  <script src="script.js"></script>
+</body>
+</html>
