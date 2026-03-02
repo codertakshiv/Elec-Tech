@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', 'Inter', sans-serif;
+  background: radial-gradient(circle at 20% 0%, #122342 0%, #04070f 55%);
+}
+
+.bg-grid {
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(0, 229, 255, 0.08), transparent 40%),
+    radial-gradient(circle at 90% 10%, rgba(41, 121, 255, 0.12), transparent 35%),
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size:
+    auto,
+    auto,
+    24px 24px,
+    24px 24px;
+}
+
+@layer components {
+  .glass-card {
+    @apply rounded-2xl border border-cyan-200/10 bg-white/5 p-4 shadow-glass backdrop-blur-lg;
+  }
+
+  .panel-title {
+    @apply text-sm font-semibold tracking-wide text-cyan-200;
+  }
+
+  .btn-primary {
+    @apply rounded-xl bg-gradient-to-r from-neon-cyan/25 to-neon-blue/25 px-4 py-3 text-sm font-semibold text-cyan-100 shadow-neon transition active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply rounded-xl border border-cyan-200/15 bg-white/5 px-4 py-3 text-sm font-semibold text-slate-200 transition active:scale-95;
+  }
+}
