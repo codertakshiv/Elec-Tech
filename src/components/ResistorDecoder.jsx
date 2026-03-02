@@ -10,9 +10,21 @@ function ResistorDecoder({ onSaveResult }) {
   const [bandCount, setBandCount] = useState(4);
   const [selectedBands, setSelectedBands] = useState(Array(4).fill(''));
   const labels = useMemo(() => getBandLabels(bandCount), [bandCount]);
+  const bandOptions = useMemo(
+    () => labels.map((_, idx) => getBandOptions(bandCount, idx)),
+    [bandCount, labels],
+  );
   const result = useMemo(
     () => decodeResistor(bandCount, selectedBands),
     [bandCount, selectedBands],
+  );
+  const previewBands = useMemo(
+    () =>
+      bandOptions.map((options, idx) => {
+        const selected = options.find((opt) => opt.name === selectedBands[idx]);
+        return selected ? selected.hex : '#6b7280';
+      }),
+    [bandOptions, selectedBands],
   );
 
   const handleBandCount = (count) => {
@@ -66,7 +78,7 @@ function ResistorDecoder({ onSaveResult }) {
         <div key={label} className="glass-card">
           <p className="mb-2 text-sm text-slate-200">{label}</p>
           <div className="flex gap-2 overflow-x-auto pb-1">
-            {getBandOptions(bandCount, idx).map((color) => {
+            {bandOptions[idx].map((color) => {
               const selected = selectedBands[idx] === color.name;
               return (
                 <button
@@ -99,6 +111,32 @@ function ResistorDecoder({ onSaveResult }) {
           </div>
         </div>
       ))}
+
+      <div className="glass-card">
+        <p className="panel-title">3D Preview</p>
+        <div className="component-stage mt-4">
+          <span className="axial-lead" />
+          <div className="axial-body">
+            <span className="axial-shine" />
+            <div className={`axial-band-row ${bandCount === 5 ? 'five' : 'four'}`}>
+              {previewBands.map((bandColor, idx) => (
+                <span
+                  key={`${labels[idx]}-${bandColor}`}
+                  className="axial-band"
+                  style={{
+                    backgroundColor: bandColor,
+                    opacity: selectedBands[idx] ? 1 : 0.35,
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+          <span className="axial-lead" />
+        </div>
+        <p className="mt-3 text-center text-xs text-slate-300">
+          {result ? `${formatOhms(result.ohms)}  +/-${result.tolerance}%` : 'Select all bands to complete the resistor.'}
+        </p>
+      </div>
 
       <div className="glass-card">
         <p className="panel-title">Result</p>

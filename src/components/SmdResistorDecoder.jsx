@@ -40,6 +40,20 @@ function SmdResistorDecoder({ onSaveResult }) {
       </header>
 
       <div className="glass-card">
+        <p className="panel-title">3D Preview</p>
+        <div className="component-stage mt-4">
+          <span className="smd-pad" />
+          <div className="smd-chip resistor">
+            <span className="smd-chip-mark">{code || '---'}</span>
+          </div>
+          <span className="smd-pad" />
+        </div>
+        <p className="mt-3 text-center text-xs text-slate-300">
+          {result ? `${formatResistorUnits(result.ohms)} (${result.type})` : 'Enter SMD resistor code to sync the marking and value.'}
+        </p>
+      </div>
+
+      <div className="glass-card">
         <p className="panel-title">Result</p>
         {!code && <p className="mt-2 text-sm text-slate-400">Type an SMD code to decode.</p>}
         {code && !result && (
